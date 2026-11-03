@@ -1,9 +1,4 @@
-import fastify from "fastify";
-import { tasksRoutes } from "./routes/tasksRoutes.js";
-
-const app = fastify();
-
-app.register(tasksRoutes);
+import { app } from "./app.js";
 
 async function startServer(){
     try {
