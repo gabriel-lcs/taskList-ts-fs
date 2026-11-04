@@ -1,5 +1,5 @@
 import { db } from "../database/database.js";
-import fastify, { FastifyInstance } from "fastify";
+import { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { tasksSchemaId, taskSchemaCreate, taskSchemaUpdate } from "../schemas/tasksSchema.js";
 
