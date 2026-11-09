@@ -35,14 +35,24 @@ function TaskList(){
             <div>
                 {
                     task.map(t => {
-                        return <div className="flex border m-3">
-                            <div className="p-4">
-                                {t.name}
+                        return <div className="flex m-3">
+                            <div className="flex border w-full text-center">
+                                <div className="p-4 min-w-80">
+                                    {t.name}
+                                </div>
+
+                                <div className="p-4 border-l w-40 ml-auto">
+                                    {t.status}
+                                </div>
                             </div>
-                            <div className="p-4">
-                                {t.status}
+
+                            <div>
+                                <button className="ml-4 p-4 border cursor-pointer">Editar</button>
                             </div>
+
                         </div>
+                        
+                       
                         
                         
                     })

@@ -1,11 +1,10 @@
-import './App.css'
 import Input from './components/Input'
 import TaskList from './components/TaskList'
 
 function App() {
   return (
     <>
-      <div>
+      <div className='flex items-center w-full justify-center flex-col'>
         <Input />
         <TaskList />
       </div>

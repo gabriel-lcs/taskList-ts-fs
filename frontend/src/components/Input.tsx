@@ -18,7 +18,7 @@ function Input(){
     return(
         <>
             <div>
-                <input type="text" placeholder="Insira uma tarefa"/>
+                <input type="text" className="m-10 border flex" placeholder="Insira uma tarefa"/>
             </div>
         </>
     )
