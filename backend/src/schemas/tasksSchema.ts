@@ -1,6 +1,6 @@
 import z from "zod";
 
-enum Enum {
+export enum Enum {
     Pendente = "Pendente",
     EmAndamento = "Em andamento",
     Concluido = "Concluido"
