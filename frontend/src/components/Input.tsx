@@ -1,13 +1,12 @@
 import { useState } from "react";
+import type { Task } from "../types/tasks";
 
-function Input(){
+function Input(props: {newInput: (task: Task) => void} ){
 
     const [task, setTask] = useState("");
 
     async function postTask() {
         try {
-            console.log(task)
-
             const res = await fetch("http://localhost:8080/tasks", {
                 method: "POST",
                 headers: {
@@ -18,10 +17,12 @@ function Input(){
 
             const data = await res.json();
 
-            if(!data.ok){
+            if(!res.ok){
                 console.log(data)
+                return
             }
 
+            props.newInput(data);
             setTask("");
             
         } catch (error) {
@@ -29,7 +30,6 @@ function Input(){
         }
     }
     
-
     return(
         <>
             <div className="flex m-10">
