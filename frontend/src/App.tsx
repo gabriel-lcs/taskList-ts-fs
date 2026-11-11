@@ -28,14 +28,18 @@ function App() {
     }, [])
 
     function addTask(task: Task){
-      setTasks(atual => [...atual, task])
+      setTasks(atual => [...atual, task]);
+    }
+
+    function deleteTask(id: string){
+      setTasks(atual => atual.filter((task) => task.id !== id));
     }
     
   return (
     <>
       <div className='flex items-center w-full justify-center flex-col'>
         <Input newInput={addTask}/>
-        <TaskList tasks={tasks}/>
+        <TaskList deletar={deleteTask} tasks={tasks}/>
       </div>
     </>
   )
