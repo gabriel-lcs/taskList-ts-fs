@@ -38,7 +38,7 @@ function Input(props: {newInput: (task: Task) => void} ){
                 value={task}
                 onChange={(e) => {setTask(e.target.value)}}/>
 
-                <button className="border ml-3 p-2 rounded-lg shadow-sm" onClick={postTask}>Enviar</button>
+                <button className="border ml-3 p-2 rounded-lg shadow-sm cursor-pointer" onClick={postTask}>Enviar</button>
             </div>
         </>
     )
