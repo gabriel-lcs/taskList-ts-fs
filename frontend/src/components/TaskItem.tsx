@@ -3,19 +3,19 @@ import { Colors } from "../enums/enums"
 import { useState } from "react";
 import { Enum } from "../enums/enums";
 
-function TaskItem(props: { task: Task, deletar: ((id: string) => void)}){
+function TaskItem(props: { task: Task, deletar: ((id: string) => void), atualizar: ((task: Task) => void)}){
 
     const valuesEnum = Object.values(Enum).filter((status) => status !== props.task.status)
 
-    const [ nome, setNome] = useState(props.task.name);
-    const [ status, setStatus] = useState(props.task.status);
-    const [editando, setEditando] = useState(false);
-    const [opcoes, setOpcoes] = useState("");
+    const [ nome, setNome ] = useState(props.task.name);
+    const [ status, setStatus ] = useState(props.task.status);
+    const [ editando, setEditando ] = useState(false);
+    const [ opcoes, setOpcoes ] = useState("");
 
     async function deletar(){
         const res = await fetch (`http://localhost:8080/tasks/${props.task.id}`, {
             method: "DELETE"
-        })
+        });
 
         const data = await res.json();
 
@@ -25,6 +25,28 @@ function TaskItem(props: { task: Task, deletar: ((id: string) => void)}){
         }
 
         props.deletar(props.task.id);
+    }
+
+    async function atualizar() {
+        const res = await fetch(`http://localhost:8080/tasks/${props.task.id}`,{
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: nome, status: status})
+        });
+
+        const data = await res.json();
+
+        if(!res.ok){
+            console.log(data);
+            return
+        }
+
+        console.log(data)
+        props.atualizar(data);
+        setEditando(false);
+        setOpcoes("");
     }
 
     return(
@@ -59,7 +81,7 @@ function TaskItem(props: { task: Task, deletar: ((id: string) => void)}){
             <div>{editando ? (<div className="flex text-sm w-fit">
                 <input className="border ml-3 p-2 rounded-lg" placeholder={nome} onChange={((e) => setNome(e.target.value))}/> 
 
-                <select className="cursor-pointer border ml-3 p-2 rounded-lg" onChange={((e) => console.log(setStatus(e.target.value as Enum)))}>
+                <select className="cursor-pointer border ml-3 p-2 rounded-lg" onChange={((e) => setStatus(e.target.value as Enum))}>
                     <option value="" disabled selected>Status</option>
                     {valuesEnum.map((s) => {
                         return <option 
@@ -73,6 +95,9 @@ function TaskItem(props: { task: Task, deletar: ((id: string) => void)}){
                     setNome(props.task.name);
                     setStatus(props.task.status)
                     setOpcoes("");}}>Cancelar</button>
+
+                 <button className="cursor-pointer border ml-3 p-2 " onClick={() => {
+                    atualizar();}}>Salvar</button>
                 </div>) : (<p></p>)}
             </div>
         </>
