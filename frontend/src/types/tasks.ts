@@ -1,7 +1,8 @@
-import {Enum} from "../../../backend/src/schemas/tasksSchema";
+import {Enum} from "../enums/enums";
 
 export type Task = {
-        id: string;
-        name: string;
-        status: Enum;
-    }
+    id: string;
+    name: string;
+    status: Enum;
+    created_at: string;
+}

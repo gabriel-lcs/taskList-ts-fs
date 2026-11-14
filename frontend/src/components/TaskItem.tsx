@@ -78,10 +78,10 @@ function TaskItem(props: { task: Task, deletar: ((id: string) => void), atualiza
                     </div> 
             </div>
 
-            <div>{editando ? (<div className="flex text-sm w-fit">
-                <input className="border ml-3 p-2 rounded-lg" placeholder={nome} onChange={((e) => setNome(e.target.value))}/> 
+            <div>{editando ? (<div id="divEditando" className="flex text-sm ml-5 mr-27 h-10 border rounded-b-lg p-1 bg-gray-200">
+                <input className="border w-70 p-2 rounded-lg" placeholder={nome} onChange={((e) => setNome(e.target.value))}/> 
 
-                <select className="cursor-pointer border ml-3 p-2 rounded-lg" onChange={((e) => setStatus(e.target.value as Enum))}>
+                <select className="text-center cursor-pointer border ml-3 rounded-lg w-20" onChange={((e) => setStatus(e.target.value as Enum))}>
                     <option value="" disabled selected>Status</option>
                     {valuesEnum.map((s) => {
                         return <option 
@@ -90,13 +90,13 @@ function TaskItem(props: { task: Task, deletar: ((id: string) => void), atualiza
                     })}
                 </select>
 
-                <button className="cursor-pointer border ml-3 p-2 " onClick={() => {
+                <button id="btnCancelar" className="flex items-center justify-center cursor-pointer ml-4  w-fit rounded-lg border shadow-sm p-2 bg-red-400" onClick={() => {
                     setEditando(false); 
                     setNome(props.task.name);
                     setStatus(props.task.status)
                     setOpcoes("");}}>Cancelar</button>
 
-                 <button className="cursor-pointer border ml-3 p-2 " onClick={() => {
+                 <button id="btnSalvar" className="flex items-center justify-center cursor-pointer ml-4 w-fit rounded-lg border shadow-sm p-2 bg-green-400" onClick={() => {
                     atualizar();}}>Salvar</button>
                 </div>) : (<p></p>)}
             </div>

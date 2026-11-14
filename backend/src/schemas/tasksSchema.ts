@@ -5,8 +5,17 @@ export enum Enum {
     EmAndamento = "Em andamento",
     Concluido = "Concluido"
 }
-    
+
 export const StatusEnum = z.enum(Enum);
+
+const TaskSchema = z.object({
+    id: z.uuid(),
+    name: z.string().min(3),
+    status: StatusEnum,
+    created_at: z.date()
+})
+
+export type Task = z.infer<typeof TaskSchema>
 
 export const taskSchemaCreate = z.object({
     name: z.string().min(3)

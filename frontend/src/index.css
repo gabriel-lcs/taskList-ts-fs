@@ -43,8 +43,16 @@
     filter: invert(1) brightness(2);
   }
 
-  #btnEditar, #campStatus {
+  #btnEditar, #campStatus, #btnSalvar, #btnCancelar {
     color: #08060d;
+  }
+
+  #divEditando{
+    background-color: #31323a;
+  }
+
+  #btnSalvar, #btnCancelar{
+    border-color: #e5e4e7;
   }
 }
 
