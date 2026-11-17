@@ -1,28 +1,24 @@
-# Task List Full Stack
-
-Lista de tarefas full stack com **React + TypeScript** no front-end e **Fastify + TypeScript + PostgreSQL** no back-end, com testes automatizados e execução completa via **Docker Compose**.
+# Task List
+Lista de tarefas full stack com React + TypeScript no front-end e Fastify + TypeScript + PostgreSQL no back-end, com testes automatizados e execução completa via Docker Compose.
 
 É a evolução de um CRUD antigo meu feito em Node com JavaScript: desta vez com tipagem, validação de dados, banco relacional, testes e containers.
 
 <img width="959" height="751" alt="image" src="https://github.com/user-attachments/assets/ff328fcd-6b34-4f4a-9c04-9c9bae803d93" />
 
-
 ## O que o projeto faz
 
 - Cria, lista, edita e exclui tarefas (CRUD completo)
-- Cada tarefa tem um status: **Pendente**, **Em andamento** ou **Concluido** (cada um com uma cor na tela)
-- Toda tarefa nova nasce como **Pendente**
+- Cada tarefa tem um status: Pendente, Em andamento ou Concluido (cada um com uma cor na tela)
+- Toda tarefa nova nasce como Pendente
 - A API valida tudo que recebe (nome com no mínimo 3 letras, status só entre os três válidos, id precisa ser um UUID) e responde com o código HTTP correto
 
 ## Tecnologias
 
-| Camada | Tecnologias |
-| --- | --- |
-| Front-end | React 19, TypeScript, Vite, Tailwind CSS |
-| Back-end | Node.js, TypeScript, Fastify, Zod (validação), postgres.js |
-| Banco de dados | PostgreSQL 16 |
-| Testes | `node:test` (test runner nativo do Node) + `app.inject` do Fastify |
-| Infraestrutura | Docker, Docker Compose, Nginx (serve o front) |
+- Front-end: React, TypeScript, Vite, Tailwind CSS
+- Back-end: Node.js, TypeScript, Fastify, Zod (validação), postgres.js
+- Banco de dados: PostgreSQL
+- Testes: `node:test` (test runner nativo do Node) + `app.inject` do Fastify
+- Infraestrutura: Docker, Docker Compose, Nginx (serve o front) 
 
 ## Como o projeto está organizado
 
@@ -48,13 +44,6 @@ taskList-ts-fs/
 └── docker-compose.yml          # db + backend + frontend
 ```
 
-### Decisões de projeto
-
-- **Validação com Zod** nas entradas da API, com um tratador de erros central: `ZodError` vira **400**, "não encontrado" vira **404** e qualquer erro inesperado vira **500** genérico (o detalhe vai só para o log).
-- **Ordenação explícita** (`ORDER BY created_at`) no `GET /tasks`: sem ela, o Postgres não garante a ordem e uma tarefa editada poderia "pular" de posição.
-- **Testes com banco separado** (`tasklist_test`), para nunca apagar os dados de quem usa o app.
-- **CORS e URL da API configuráveis por variável de ambiente**, para o mesmo código rodar localmente e em containers.
-
 ## Rodando com Docker (recomendado)
 
 Pré-requisito: [Docker](https://docs.docker.com/get-docker/) com o Compose.
@@ -64,7 +53,7 @@ Pré-requisito: [Docker](https://docs.docker.com/get-docker/) com o Compose.
 git clone https://github.com/gabriel-lcs/taskList-ts-fs.git
 cd taskList-ts-fs
 
-# 2. crie o arquivo de variáveis e troque a senha
+# 2. crie o arquivo de variáveis e TROQUE A SENHA
 cp .env.example .env
 
 # 3. suba tudo (banco, back e front)
@@ -79,13 +68,12 @@ Depois é só abrir:
 Comandos úteis:
 
 ```bash
-docker compose up -d --build   # sobe em segundo plano
-docker compose logs -f backend # acompanha os logs do back
+docker compose up              # sobre novamente o container
 docker compose down            # para os containers (mantém os dados)
 docker compose down -v         # para e APAGA o banco (recomeça do zero)
 ```
 
-> O `schema.sql` só é aplicado na **primeira** subida (quando o volume do banco está vazio). Se alterar o schema, rode `docker compose down -v` e suba de novo.
+> O `schema.sql` só é aplicado na primeira subida (quando o volume do banco está vazio). Se alterar o schema, rode `docker compose down -v` e suba de novo.
 
 ## Rodando sem Docker
 
@@ -113,7 +101,7 @@ npm run dev                 # http://localhost:5173
 
 ## Rodando os testes
 
-Os testes **apagam a tabela `tasks`** do banco que estiverem usando, por isso usam um banco próprio (`tasklist_test`), que o Docker Compose já cria junto com o principal.
+Os testes apagam a tabela `tasks` do banco que estiverem usando, por isso usam um banco próprio (`tasklist_test`), que o Docker Compose já cria junto com o principal.
 
 ```bash
 # com o banco do docker compose no ar (docker compose up -d db)
@@ -126,16 +114,6 @@ npm test
 Sem Docker: crie o banco `tasklist_test`, aplique o `sql/schema.sql` nele e aponte o `.env.test` para ele.
 
 São 16 testes que cobrem todas as rotas, incluindo os casos de erro (400 e 404).
-
-## Variáveis de ambiente
-
-| Variável | Onde | Para que serve |
-| --- | --- | --- |
-| `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` | `.env` da raiz | Credenciais do Postgres no Docker Compose |
-| `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | `backend/.env` | Conexão do back com o banco |
-| `PORT` | `backend/.env` | Porta da API (padrão 8080) |
-| `CORS_ORIGIN` | `backend/.env` | Origem do front liberada no CORS |
-| `VITE_API_URL` | `frontend/.env` | Endereço da API usado pelo front |
 
 ## API
 
