@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_URL } from "../config";
 import type { Task } from "../types/tasks";
 
 function Input(props: {newInput: (task: Task) => void} ){
@@ -7,7 +8,7 @@ function Input(props: {newInput: (task: Task) => void} ){
 
     async function postTask() {
         try {
-            const res = await fetch("http://localhost:8080/tasks", {
+            const res = await fetch(`${API_URL}/tasks`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

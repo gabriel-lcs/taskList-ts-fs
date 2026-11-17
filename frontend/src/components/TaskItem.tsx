@@ -2,6 +2,7 @@ import type { Task } from "../types/tasks";
 import { Colors } from "../enums/enums"
 import { useState } from "react";
 import { Enum } from "../enums/enums";
+import { API_URL } from "../config";
 
 function TaskItem(props: { task: Task, deletar: ((id: string) => void), atualizar: ((task: Task) => void)}){
 
@@ -13,7 +14,7 @@ function TaskItem(props: { task: Task, deletar: ((id: string) => void), atualiza
     const [ opcoes, setOpcoes ] = useState("");
 
     async function deletar(){
-        const res = await fetch (`http://localhost:8080/tasks/${props.task.id}`, {
+        const res = await fetch (`${API_URL}/tasks/${props.task.id}`, {
             method: "DELETE"
         });
 
@@ -28,7 +29,7 @@ function TaskItem(props: { task: Task, deletar: ((id: string) => void), atualiza
     }
 
     async function atualizar() {
-        const res = await fetch(`http://localhost:8080/tasks/${props.task.id}`,{
+        const res = await fetch(`${API_URL}/tasks/${props.task.id}`,{
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -53,7 +54,7 @@ function TaskItem(props: { task: Task, deletar: ((id: string) => void), atualiza
         <>
             <div className="flex m-3 text-sm mb-0">
                     <div className="flex border w-full text-center shadow-sm rounded-b-lg">
-                        <div className="p-4 min-w-80 ">
+                        <div className="p-4 min-w-100 ">
                             {props.task.name}
                         </div>
 

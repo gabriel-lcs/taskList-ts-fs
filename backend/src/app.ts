@@ -6,7 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "./errors/notFoundError.js";
 
 export const app = fastify(
-    { logger: true }
+    { logger: process.env.NODE_ENV !== "test" }
 );
 
 app.setErrorHandler<FastifyError>((err, req, rep) => {
@@ -26,7 +26,7 @@ app.setErrorHandler<FastifyError>((err, req, rep) => {
 });
 
 await app.register(cors, {
-    origin: "http://localhost:5173",
+    origin: process.env.CORS_ORIGIN ?? "http://localhost:5173",
     methods: ["GET", "HEAD", "POST", "PATCH", "DELETE", "PUT"]
 });
 
