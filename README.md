@@ -4,7 +4,7 @@ Lista de tarefas full stack com **React + TypeScript** no front-end e **Fastify 
 
 É a evolução de um CRUD antigo meu feito em Node com JavaScript: desta vez com tipagem, validação de dados, banco relacional, testes e containers.
 
-> 📸 **Adicione aqui um print ou GIF da tela** (ex.: `docs/screenshot.png`) com `![Task List](docs/screenshot.png)`
+<!-- > 📸 **Adicione aqui um print ou GIF da tela** (ex.: `docs/screenshot.png`) com `![Task List](docs/screenshot.png)` -->
 
 ## O que o projeto faz
 
