@@ -61,7 +61,7 @@ Pré-requisito: [Docker](https://docs.docker.com/get-docker/) com o Compose.
 
 ```bash
 # 1. clone o repositório
-git clone <URL-DO-REPOSITORIO>
+git clone https://github.com/gabriel-lcs/taskList-ts-fs.git
 cd taskList-ts-fs
 
 # 2. crie o arquivo de variáveis e troque a senha
