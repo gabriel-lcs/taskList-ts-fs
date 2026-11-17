@@ -2,6 +2,7 @@ import { db } from "../database/database.js";
 import { FastifyInstance } from "fastify";
 import { StatusCodes } from "http-status-codes";
 import { tasksSchemaId, taskSchemaCreate, taskSchemaUpdate, Task } from "../schemas/tasksSchema.js";
+import { NotFoundError } from "../errors/notFoundError.js";
 
 export async function tasksRoutes(app: FastifyInstance) {
 
@@ -35,7 +36,7 @@ export async function tasksRoutes(app: FastifyInstance) {
         const deletar = await db<Task[]>`delete from tasks where id = (${id.id}) returning *`
 
         if (deletar[0] === undefined){
-            return rep.code(StatusCodes.NOT_FOUND).send( { error: "Not found" } );
+            throw new NotFoundError();
         }
 
         return rep.code(StatusCodes.OK).send(deletar[0]);

@@ -3,6 +3,7 @@ import { tasksRoutes } from "./routes/tasksRoutes.js";
 import cors from "@fastify/cors";
 import { ZodError } from "zod";
 import { StatusCodes } from "http-status-codes";
+import { NotFoundError } from "./errors/notFoundError.js";
 
 export const app = fastify(
     { logger: true }
@@ -11,6 +12,8 @@ export const app = fastify(
 app.setErrorHandler<FastifyError>((err, req, rep) => {
     if(err instanceof ZodError){
         rep.code(StatusCodes.BAD_REQUEST).send({ error: err.issues });
+    }else if(err instanceof NotFoundError){
+        rep.code(StatusCodes.NOT_FOUND).send({ error: "Not found" })
     }else{
         if (err.statusCode !== undefined && err.statusCode >= 400 && err.statusCode < 500){
             rep.code(err.statusCode).send({ error: err.message });  
